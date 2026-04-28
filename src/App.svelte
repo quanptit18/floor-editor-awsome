@@ -1,11 +1,3 @@
-<svelte:options />
-
-<!--<script lang="ts">-->
-<!--  export let name: string = "world";-->
-<!--</script>-->
-
-<!--<h1>Hello {name} 👋</h1>-->
-
 <script lang="ts">
   import './app.css';
   import { onMount } from 'svelte';
@@ -25,6 +17,16 @@
   import OnboardingTooltip from '$lib/components/OnboardingTooltip.svelte';
   import { triggerTip } from '$lib/stores/onboarding.svelte';
   
+  let { stores } = $props()
+  
+  // Subscribe store
+  let floorData = $state(null)
+  let config = $state(null)
+  
+  stores?.floorData.subscribe(v => floorData = v)
+  stores?.config.subscribe(v => config = v)
+  
+  
   let commandPaletteOpen = $state(false);
   let printOpen = $state(false);
   
@@ -36,6 +38,10 @@
   viewMode.subscribe((m) => {
     mode = m;
   });
+  
+  $effect(() => {
+    currentProject.set(floorData || createDefaultProject());
+  })
   
   onMount(() => {
     (async () => {

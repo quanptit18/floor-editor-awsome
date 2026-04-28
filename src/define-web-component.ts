@@ -1,22 +1,40 @@
 import { mount } from 'svelte'
+import { writable } from 'svelte/store'
 import App from './App.svelte'
 import styles from './app.css?inline'
 
 class FloorEditor extends HTMLElement {
-    constructor() {
-        super()
+    #app: any;
+    #wrapper: any;
+    #store = {
+        floorData: writable(null),
+        config: writable(null)
+    }
+
+    connectedCallback() {
         const shadow = this.attachShadow({ mode: 'open' })
 
-        // Inject CSS vào shadow DOM
         const style = document.createElement('style')
         style.textContent = styles
         shadow.appendChild(style)
 
-        // Mount Svelte 5 vào shadow DOM
-        mount(App, {
-            target: shadow,
-            props: {}
+        this.#wrapper = document.createElement('div')
+        shadow.appendChild(this.#wrapper)
+
+        this.#app = mount(App, {
+            target: this.#wrapper,
+            props: {
+                stores: this.#store
+            }
         })
+    }
+
+    set floorData(value) {
+        this.#store.floorData.set(value)
+    }
+
+    set config(value) {
+        this.#store.config.set(value)
     }
 }
 
