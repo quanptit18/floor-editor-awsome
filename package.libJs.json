@@ -1,20 +1,22 @@
 {
-  "name": "floor-editor-awesome",
+  "name": "floor-editor-awesome-101",
   "private": false,
   "version": "1.0.0",
   "type": "module",
-  "main": "dist/floor-editor.umd.cjs",
-  "module": "dist/floor-editor.js",
+  "main": "floor-editor.umd.cjs",
+  "module": "floor-editor.js",
   "exports": {
     ".": {
-      "import": "./dist/floor-editor.js",
-      "require": "./dist/floor-editor.umd.cjs"
+      "import": "./floor-editor.js",
+      "require": "./floor-editor.umd.cjs"
     }
   },
   "scripts": {
     "dev": "vite",
     "build": "vite build",
     "build:js": "vite build --config vite.libJS.config.ts",
+    "publish": "node scripts/publish-lib.js",
+    "publish:js": "node scripts/publish-libjs.js",
     "preview": "vite preview",
     "check": "svelte-check --tsconfig ./tsconfig.app.json && tsc -p tsconfig.node.json",
     "build:css": "tailwindcss -i ./src/app.css -o ./src/tailwind-output.css"
