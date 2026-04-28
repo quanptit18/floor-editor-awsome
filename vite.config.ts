@@ -1,13 +1,11 @@
 import { defineConfig } from 'vite';
 import { svelte } from '@sveltejs/vite-plugin-svelte';
-import cssInjectedByJsPlugin from 'vite-plugin-css-injected-by-js'
 import path from 'path';
 import dts from 'vite-plugin-dts';
 
 export default defineConfig({
   plugins: [
     svelte(),
-    // cssInjectedByJsPlugin(),
     dts()
   ],
   resolve: {

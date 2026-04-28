@@ -3,13 +3,12 @@
   "private": false,
   "version": "1.0.0",
   "type": "module",
-  "types": "./dist/src/main.d.ts",
   "main": "dist/floor-editor.umd.cjs",
-  "module": "dist/floor-editor.umd.cjs",
+  "module": "dist/floor-editor.js",
   "exports": {
     ".": {
-      "import": "./dist/floor-editor.umd.js",
-      "types": "./dist/src/main.d.ts"
+      "import": "./dist/floor-editor.js",
+      "require": "./dist/floor-editor.umd.cjs"
     }
   },
   "scripts": {
@@ -28,9 +27,7 @@
     "@types/node": "^24.12.2",
     "tailwindcss": "^4.2.4",
     "typescript": "~6.0.2",
-    "vite": "^8.0.9",
-    "vite-plugin-css-injected-by-js": "^5.0.1",
-    "vite-plugin-dts": "^4.5.4"
+    "vite": "^8.0.9"
   },
   "dependencies": {
     "dxf-writer": "^1.18.4",
