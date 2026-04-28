@@ -1,5 +1,5 @@
 {
-  "name": "floor-editor-awesome-105",
+  "name": "floor-editor-awesome",
   "private": false,
   "version": "1.0.0",
   "type": "module",
@@ -16,7 +16,7 @@
     "dev": "vite",
     "build": "vite build",
     "build:js": "vite build --config vite.libJS.config.ts",
-    "publish": "node scripts/publish-lib.js",
+    "publish:ts": "node scripts/publish-lib.js",
     "publish:js": "node scripts/publish-libjs.js",
     "preview": "vite preview",
     "check": "svelte-check --tsconfig ./tsconfig.app.json && tsc -p tsconfig.node.json",
