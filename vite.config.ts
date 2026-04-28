@@ -6,12 +6,8 @@ import dts from 'vite-plugin-dts';
 
 export default defineConfig({
   plugins: [
-    svelte({
-      compilerOptions: {
-        customElement: true,
-      }
-    }),
-    cssInjectedByJsPlugin(),
+    svelte(),
+    // cssInjectedByJsPlugin(),
     dts()
   ],
   resolve: {

@@ -11,7 +11,9 @@
   import { importRoomPlan, extractRoomJsonFromZip, ORTHO_VERSION } from '$lib/utils/roomplanImport';
   import { currentProject, loadProject, importFloorIntoCurrentProject, createDefaultProject } from '$lib/stores/project';
   import type { Project } from '$lib/models/types';
-
+  import UndoHistoryPanel from "$lib/components/editor/UndoHistoryPanel.svelte";
+  
+  let { showLayers = $bindable(), showUndoHistory = $bindable(), showHelp = $bindable() } = $props();
   // AreaSummaryPanel moved to top bar dialog
   let activeTab = $state<'draw' | 'rooms' | 'objects'>('draw');
   let constructionOpen = $state(true);
@@ -304,7 +306,7 @@
   };
 </script>
 
-<div class="w-64 bg-white border-r border-gray-200 flex flex-col h-full overflow-hidden">
+<div class="relative w-64 bg-white border-r border-gray-200 flex flex-col h-full overflow-hidden">
   <!-- Tabs -->
   <div class="flex border-b border-gray-200">
     <button
@@ -676,6 +678,38 @@
       </div>
     {/if}
   </div>
+  
+  <!-- Layers toggle button -->
+  <button
+    class="absolute bottom-4 left-14 w-8 h-8 rounded-full shadow-lg hover:bg-slate-600 transition-colors z-50 text-sm"
+    class:bg-blue-600={showLayers}
+    class:text-white={showLayers}
+    class:bg-slate-700={!showLayers}
+    class:text-gray-300={!showLayers}
+    onclick={() => showLayers = !showLayers}
+    title="Layers Panel (L)"
+    aria-label="Toggle Layers Panel"
+  >🗂</button>
+  
+  <!-- Undo History toggle button -->
+  <button
+    class="absolute bottom-4 left-24 w-8 h-8 rounded-full shadow-lg hover:bg-slate-600 transition-colors z-50 text-sm"
+    class:bg-blue-600={showUndoHistory}
+    class:text-white={showUndoHistory}
+    class:bg-slate-700={!showUndoHistory}
+    class:text-gray-300={!showUndoHistory}
+    onclick={() => showUndoHistory = !showUndoHistory}
+    title="Undo History"
+    aria-label="Toggle Undo History"
+  >⟲</button>
+  
+  <!-- Help button -->
+  <button
+    class="absolute bottom-4 left-4 w-8 h-8 rounded-full bg-slate-700 text-white text-sm font-bold shadow-lg hover:bg-slate-600 transition-colors z-50"
+    onclick={() => showHelp = !showHelp}
+    title="Keyboard Shortcuts (?)"
+    aria-label="Keyboard Shortcuts"
+  >?</button>
 </div>
 
 <!-- Furniture Hover Preview Tooltip -->

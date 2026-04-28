@@ -1,7 +1,4 @@
-<svelte:options customElement={{
-    tag: "floor-editor",
-    shadow: "none"
-  }} />
+<svelte:options />
 
 <!--<script lang="ts">-->
 <!--  export let name: string = "world";-->
@@ -80,7 +77,7 @@
     <TopBar />
     <div class="flex flex-1 overflow-hidden">
       {#if mode === '2d'}
-        <BuildPanel />
+        <BuildPanel bind:showHelp={showHelp} bind:showLayers={showLayers} bind:showUndoHistory={showUndoHistory} />
       {/if}
       <div class="flex-1 min-w-0 relative">
         {#if mode === '2d'}
@@ -95,41 +92,7 @@
     </div>
   </div>
   
-  <!-- Layers toggle button -->
-  {#if mode === '2d'}
-    <button
-      class="fixed bottom-4 left-14 w-8 h-8 rounded-full shadow-lg hover:bg-slate-600 transition-colors z-50 text-sm"
-      class:bg-blue-600={showLayers}
-      class:text-white={showLayers}
-      class:bg-slate-700={!showLayers}
-      class:text-gray-300={!showLayers}
-      onclick={() => showLayers = !showLayers}
-      title="Layers Panel (L)"
-      aria-label="Toggle Layers Panel"
-    >🗂</button>
-  {/if}
-  
-  <!-- Undo History toggle button -->
-  <button
-    class="fixed bottom-4 left-24 w-8 h-8 rounded-full shadow-lg hover:bg-slate-600 transition-colors z-50 text-sm"
-    class:bg-blue-600={showUndoHistory}
-    class:text-white={showUndoHistory}
-    class:bg-slate-700={!showUndoHistory}
-    class:text-gray-300={!showUndoHistory}
-    onclick={() => showUndoHistory = !showUndoHistory}
-    title="Undo History"
-    aria-label="Toggle Undo History"
-  >⟲</button>
-  
   <UndoHistoryPanel bind:visible={showUndoHistory} />
-  
-  <!-- Help button -->
-  <button
-    class="fixed bottom-4 left-4 w-8 h-8 rounded-full bg-slate-700 text-white text-sm font-bold shadow-lg hover:bg-slate-600 transition-colors z-50"
-    onclick={() => showHelp = !showHelp}
-    title="Keyboard Shortcuts (?)"
-    aria-label="Keyboard Shortcuts"
-  >?</button>
   
   <!-- Shortcuts overlay -->
   {#if showHelp}
