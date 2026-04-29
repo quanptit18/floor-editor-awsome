@@ -674,6 +674,7 @@ const [floor, setFloor] = useState({
 useEffect(() => {
     if (floorRef.current) {
       floorRef.current.floorData = floor;
+      floorRef.current.config = { viewOnly: false };
     }
 }, [floor]);
 
