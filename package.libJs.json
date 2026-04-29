@@ -3,20 +3,19 @@
   "private": false,
   "version": "1.0.0",
   "type": "module",
-  "types": "./src/main.d.ts",
   "main": "floor-editor.umd.cjs",
-  "module": "floor-editor.umd.cjs",
+  "module": "floor-editor.js",
   "exports": {
     ".": {
-      "import": "./floor-editor.umd.js",
-      "types": "./src/main.d.ts"
+      "import": "./floor-editor.js",
+      "require": "./floor-editor.umd.cjs"
     }
   },
   "scripts": {
     "dev": "vite",
     "build": "vite build",
     "build:js": "vite build --config vite.libJS.config.ts",
-    "publish:ts": "node scripts/publish-lib.js",
+    "publish": "node scripts/publish-lib.js",
     "publish:js": "node scripts/publish-libjs.js",
     "preview": "vite preview",
     "check": "svelte-check --tsconfig ./tsconfig.app.json && tsc -p tsconfig.node.json",
@@ -30,9 +29,7 @@
     "@types/node": "^24.12.2",
     "tailwindcss": "^4.2.4",
     "typescript": "~6.0.2",
-    "vite": "^8.0.9",
-    "vite-plugin-css-injected-by-js": "^5.0.1",
-    "vite-plugin-dts": "^4.5.4"
+    "vite": "^8.0.9"
   },
   "dependencies": {
     "dxf-writer": "^1.18.4",
