@@ -124,7 +124,8 @@
     pointInPolygon,
     positionOnWall
   } from '$lib/utils/hitTesting';
-
+  
+  let { viewOnly } = $props();
   let canvas: HTMLCanvasElement;
   let ctx: CanvasRenderingContext2D;
   let width = $state(800);
@@ -2129,6 +2130,7 @@
   // pointInPolygon, pointToSegmentDist, positionOnWall imported from hitTesting.ts
 
   function onMouseDown(e: MouseEvent) {
+    if (viewOnly) return;
     markDirty();
     if (e.button === 1 || (e.button === 0 && (spaceDown || $panMode || (e.shiftKey && currentTool === 'select')))) {
       isPanning = true;
@@ -2543,6 +2545,7 @@
   }
 
   function onDblClick(e: MouseEvent) {
+    if (viewOnly) return;
     const rect = canvas.getBoundingClientRect();
     const sx = e.clientX - rect.left;
     const sy = e.clientY - rect.top;
@@ -2621,6 +2624,7 @@
   }
 
   function onMouseMove(e: MouseEvent) {
+    if (viewOnly) return;
     markDirty();
     const rect = canvas.getBoundingClientRect();
     mousePos = screenToWorld(e.clientX - rect.left, e.clientY - rect.top);
@@ -2887,6 +2891,7 @@
   }
 
   function onMouseUp(e: MouseEvent) {
+    if (viewOnly) return;
     markDirty();
     isPanning = false;
     draggingGuideId = null;
@@ -3039,6 +3044,7 @@
   }
 
   function onKeyDown(e: KeyboardEvent) {
+    if (viewOnly) return;
     shiftDown = e.shiftKey;
     if (e.code === 'Space') { spaceDown = true; e.preventDefault(); return; }
 
@@ -3257,11 +3263,13 @@
   }
 
   function onKeyUp(e: KeyboardEvent) {
+    if (viewOnly) return;
     shiftDown = e.shiftKey;
     if (e.code === 'Space') spaceDown = false;
   }
 
   function onDragOver(e: DragEvent) {
+    if (viewOnly) return;
     if (e.dataTransfer?.types.includes('application/o3d-type')) {
       e.preventDefault();
       if (e.dataTransfer) e.dataTransfer.dropEffect = 'copy';
@@ -3275,10 +3283,12 @@
   }
 
   function onDragLeave(e: DragEvent) {
+    if (viewOnly) return;
     dragPreview = null;
   }
 
   function onDrop(e: DragEvent) {
+    if (viewOnly) return;
     e.preventDefault();
     dragPreview = null;
     const itemType = e.dataTransfer?.getData('application/o3d-type');
@@ -3353,6 +3363,7 @@
   }
 
   function onContextMenu(e: MouseEvent) {
+    if (viewOnly) return;
     e.preventDefault();
 
     // If in measurement mode, use old behaviour
@@ -3690,7 +3701,7 @@
     />
   {/if}
   <!-- Empty state hint -->
-  {#if currentFloor && currentFloor.walls.length === 0 && currentFloor.furniture.length === 0 && currentFloor.doors.length === 0}
+  {#if (currentFloor && currentFloor.walls.length === 0 && currentFloor.furniture.length === 0 && currentFloor.doors.length === 0) && !viewOnly}
     <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
       <div class="text-center opacity-60">
         <div class="text-5xl mb-3">🏠</div>

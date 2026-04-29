@@ -17,7 +17,6 @@ function resolveTheme(pref: ThemePreference): 'light' | 'dark' {
 
 function applyTheme(resolved: 'light' | 'dark') {
   if (typeof document === 'undefined') return;
-  console.log('document.documentElement', document.documentElement);
   document.documentElement.classList.toggle('dark', resolved === 'dark');
 }
 
