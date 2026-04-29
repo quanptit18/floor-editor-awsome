@@ -13,7 +13,7 @@ let initialized = false;
 let skipNext = false;
 
 /** Call once to start watching project changes */
-export function initAutoSave() {
+export function initAutoSave(onDispatch?: any) {
   if (initialized) return;
   initialized = true;
 
@@ -23,20 +23,20 @@ export function initAutoSave() {
     if (first) { first = false; return; }
     if (skipNext) { skipNext = false; return; }
     if (!_p) return;
-    markDirty();
+    markDirty(onDispatch);
   });
 }
 
 /** Mark project as dirty (unsaved). */
-export function markDirty() {
+export function markDirty(onDispatch?: any) {
   saveState.set('unsaved');
   if (debounceTimer) clearTimeout(debounceTimer);
   debounceTimer = setTimeout(() => {
-    autoSave();
+    autoSave(onDispatch);
   }, 5000);
 }
 
-function captureThumbnail(projectId: string) {
+export function captureThumbnail(projectId: string) {
   try {
     const canvas = document.querySelector('canvas') as HTMLCanvasElement;
     if (!canvas) return;
@@ -52,13 +52,15 @@ function captureThumbnail(projectId: string) {
   } catch {}
 }
 
-async function autoSave() {
+async function autoSave(onDispatch?: any) {
   const p = get(currentProject);
   if (!p) return;
   saveState.set('saving');
   try {
-    await localStore.save(p);
-    captureThumbnail(p.id);
+    // await localStore.save(p);
+
+    const thumbnail = captureThumbnail(p.id);
+    onDispatch('floor:autoSave', { data: {...p, thumbnail} });
     saveState.set('saved');
     lastSavedAt.set(new Date());
   } catch (e) {

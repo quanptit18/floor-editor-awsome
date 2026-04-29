@@ -678,4 +678,23 @@ useEffect(() => {
     }
 }, [floor]);
 
+useEffect(() => {
+    const handleSave = (e) => {
+      console.log('saved:', e.detail);
+    };
+
+    const handleAutoSave = (e) => {
+      console.log('autoSaved:', e.detail);
+    };
+
+    floorRef.current.addEventListener('floor:save', handleSave);
+    floorRef.current.addEventListener('floor:autoSave', handleAutoSave);
+
+    // Cleanup khi unmount
+    return () => {
+      floorRef.current.removeEventListener('floor:save', handleSave);
+      floorRef.current.removeEventListener('floor:autoSave', handleAutoSave);
+    };
+  }, []);
+
 <floor-editor ref={floorRef}></floor-editor>

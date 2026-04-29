@@ -24,7 +24,14 @@ class FloorEditor extends HTMLElement {
         this.#app = mount(App, {
             target: this.#wrapper,
             props: {
-                stores: this.#store
+                stores: this.#store,
+                onDispatch: (eventName: string, detail: any) => {
+                    this.dispatchEvent(new CustomEvent(eventName, {
+                        detail,
+                        bubbles: true,      // nổi lên DOM tree
+                        composed: true      // vượt qua shadow DOM boundary
+                    }))
+                }
             }
         })
     }

@@ -1,7 +1,7 @@
 {
   "name": "floor-editor-awesome",
   "private": false,
-  "version": "1.0.0",
+  "version": "1.0.1",
   "type": "module",
   "types": "./src/main.d.ts",
   "main": "floor-editor.umd.cjs",
