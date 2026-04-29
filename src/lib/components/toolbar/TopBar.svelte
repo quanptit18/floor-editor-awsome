@@ -9,11 +9,11 @@
   import { importRoomPlan } from '$lib/utils/roomplanImport';
   import SettingsDialog from './SettingsDialog.svelte';
   import AreaSummaryPanel from '$lib/components/sidebar/AreaSummaryPanel.svelte';
-  import { saveState, lastSavedAt, manualSave, initAutoSave } from '$lib/stores/saveStatus';
+  import {saveState, lastSavedAt, manualSave, initAutoSave, captureThumbnail} from '$lib/stores/saveStatus';
   import { initVersionHistory, snapshotOnAction } from '$lib/stores/versionHistory';
   import VersionHistoryPanel from './VersionHistoryPanel.svelte';
   
-  let { viewOnly } = $props();
+  let { viewOnly, onDispatch } = $props();
   let settingsOpen = $state(false);
   let areaOpen = $state(false);
   let versionHistoryOpen = $state(false);
@@ -60,7 +60,10 @@
   }
 
   async function save() {
-    await manualSave();
+    const p = get(currentProject);
+    const thumbnail = captureThumbnail(p.id);
+    onDispatch('floor:save', { data: {...p, thumbnail} });
+    // await manualSave();
   }
 
   // Relative time for tooltip
@@ -157,7 +160,7 @@
   }
 
   onMount(() => {
-    initAutoSave();
+    initAutoSave(onDispatch);
     initVersionHistory();
 
     // Update relative timestamp every 15s

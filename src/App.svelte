@@ -16,7 +16,7 @@
   
   let showLayers = $state(false);
   
-  let { stores } = $props()
+  let { stores, onDispatch } = $props()
   
   // Subscribe store
   let floorData = $state(null)
@@ -713,7 +713,7 @@
 
 {#if ready}
   <div class="h-screen flex flex-col overflow-hidden">
-    <TopBar viewOnly={config.viewOnly} />
+    <TopBar viewOnly={config.viewOnly} onDispatch={onDispatch} />
     <div class="flex flex-1 overflow-hidden">
       {#if mode === '2d' && !config?.viewOnly}
         <BuildPanel bind:showHelp={showHelp} bind:showLayers={showLayers} bind:showUndoHistory={showUndoHistory} />

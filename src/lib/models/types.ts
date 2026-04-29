@@ -165,6 +165,7 @@ export interface Project {
   description?: string;
   floors: Floor[];
   activeFloorId: string;
+  thumbnail?: string;
   createdAt: Date;
   updatedAt: Date;
 }
