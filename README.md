@@ -2,7 +2,7 @@
 
 ```
 npm run build
-npm run publish
+npm run publish:ts
 ```
 # Build JS
 
